@@ -1,29 +1,43 @@
-import React, { Suspense, useState } from 'react'
-import { AxesHelper } from "three";
+import React, { Suspense, useState, useEffect } from 'react'
 import Mineral from './components/Mineral'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { PointerLockControls } from '@react-three/drei'
 import InfoPanel from './components/InfoPanel';
 import { minerals } from './data/minerals';
 import Floor from './components/Floor';
 import Pedestal from './components/Pedestal';
 import MuseumWalls from './components/MuseumWalls';
 import MuseumTitle from './components/MuseumTitle';
+import Player from './components/Player';
 
 const App = () => {
   const [selectedMineral, setSelectedMineral] = useState(null)
+  const [mode, setMode] = useState("home")
 
   const positions = [
-  [-5,0,-5],
-  [5,0,-5],
-  [-5,0,5],
-  [5,0,5],
-  [0,0,0]
-]
+    [-5, 0, -5],
+    [5, 0, -5],
+    [-5, 0, 5],
+    [5, 0, 5],
+    [0, 0, 0]
+  ]
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key.toLowerCase() === "e") {
+        // inspect
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+
+    return () =>
+      window.removeEventListener("keydown", handleKey);
+  }, []);
 
   return (
     <div className='w-screen h-screen bg-black'>
-      
+
       <Canvas camera={{ position: [0, 6, 16], fov: 50 }} shadows>
         <ambientLight intensity={1} />
         <directionalLight
@@ -31,8 +45,8 @@ const App = () => {
           position={[5, 10, 5]} intensity={3}
         />
         <pointLight
-        position={[0,8,0]} 
-        intensity={30}
+          position={[0, 8, 0]}
+          intensity={30}
         />
 
         {minerals.map((mineral, index) => {
@@ -47,7 +61,6 @@ const App = () => {
           )
         })
         }
-        <Floor />
         {
           positions.map((pos, index) => {
             return (
@@ -58,15 +71,58 @@ const App = () => {
             )
           })
         }
+
+        {
+          mode === "explore" && (
+            <PointerLockControls />
+            
+          )
+        }
+        {
+          mode === "explore" && (
+           <Player />
+            
+          )
+        }
+
+
+
+
+
+        <Floor />
         <MuseumWalls />
         <MuseumTitle />
-      {/* <OrbitControls /> */}
       </Canvas>
       {
         selectedMineral && (
           <InfoPanel mineral={selectedMineral}
             setSelectedMineral={setSelectedMineral}
+            setMode={setMode}
           />
+        )
+      }
+
+      {
+        mode === "home" && (
+          <div className='absolute inset-0 flex justify-center items-center z-50'>
+            <button className='px-6 py-3 bg-white rounded-lg'
+              onClick={() => setMode("explore")}
+            >
+              Enter Museum
+
+            </button>
+
+          </div>
+        )
+      }
+
+      {
+        mode === "explore" && (
+          <div className='absolute top-1/2 left-1/2 text-white text-3xl z-50'
+            style={{ transform: "translate(-50%,-50%)" }}
+          >
+            +
+          </div>
         )
       }
     </div>

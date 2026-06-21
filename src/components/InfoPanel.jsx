@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InfoPanel = ({ mineral, setSelectedMineral }) => {
+const InfoPanel = ({ mineral, setSelectedMineral,setMode }) => {
 
   return (
     <div className="absolute top-5 right-5 p-4 rounded-lg w-80 bg-white">
@@ -17,6 +17,7 @@ const InfoPanel = ({ mineral, setSelectedMineral }) => {
       <p>{mineral.description}</p>
       <button onClick={() => {
         setSelectedMineral(null)
+        setMode("explore")
       }} className='absolute top-2 right-2'>
         X
       </button>
