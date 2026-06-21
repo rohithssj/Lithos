@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 
-const Player = () => {
+const Player = ({minerals,setnearbyMineral}) => {
     const keys = useRef({});
 
     useEffect(() => {
@@ -39,6 +39,30 @@ const Player = () => {
 
         if (keys.current["d"]) {
             state.camera.position.x += speed * delta;
+        }
+
+        const cameraPos = state.camera.position;
+
+        let closest = null;
+        let closestDistance = Infinity;
+
+        minerals.forEach((mineral) => {
+
+            const dx = cameraPos.x - mineral.position[0];
+            const dz = cameraPos.z - mineral.position[2];
+
+            const distance = Math.sqrt(dx * dx + dz * dz);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closest = mineral;
+            }
+        });
+
+        if (closestDistance < 4) {
+            setnearbyMineral(closest);
+        } else {
+            setnearbyMineral(null);
         }
     });
 

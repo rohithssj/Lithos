@@ -13,6 +13,8 @@ import Player from './components/Player';
 const App = () => {
   const [selectedMineral, setSelectedMineral] = useState(null)
   const [mode, setMode] = useState("home")
+  const [showPointerMessage, setShowPointerMessage] = useState(true)
+  const [nearbyMineral, setnearbyMineral] = useState(null)
 
   const positions = [
     [-5, 0, -5],
@@ -22,10 +24,30 @@ const App = () => {
     [0, 0, 0]
   ]
 
+  const mineralData = minerals.map((mineral, index) => ({
+    ...mineral,
+    position: positions[index]
+  }))
+
+  const handleEnterMuseum = async () => {
+    try {
+      await document.documentElement.requestFullscreen();
+      setMode("explore");
+      setShowPointerMessage(true)
+
+      setTimeout(() => {
+        setShowPointerMessage(false)
+      }, 3000)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const handleKey = (e) => {
-      if (e.key.toLowerCase() === "e") {
-        // inspect
+      if (e.key.toLowerCase() === "e" && nearbyMineral) {
+        setSelectedMineral(nearbyMineral)
+        setMode("inspect")
       }
     };
 
@@ -33,7 +55,7 @@ const App = () => {
 
     return () =>
       window.removeEventListener("keydown", handleKey);
-  }, []);
+  }, [nearbyMineral]);
 
   return (
     <div className='w-screen h-screen bg-black'>
@@ -75,13 +97,13 @@ const App = () => {
         {
           mode === "explore" && (
             <PointerLockControls />
-            
+
           )
         }
         {
           mode === "explore" && (
-           <Player />
-            
+            <Player minerals={mineralData} setnearbyMineral={setnearbyMineral} />
+
           )
         }
 
@@ -106,15 +128,28 @@ const App = () => {
         mode === "home" && (
           <div className='absolute inset-0 flex justify-center items-center z-50'>
             <button className='px-6 py-3 bg-white rounded-lg'
-              onClick={() => setMode("explore")}
+              onClick={handleEnterMuseum}
             >
-              Enter Museum
+              Start Exploring
 
             </button>
 
           </div>
         )
       }
+
+      {
+        mode === "explore" && showPointerMessage && (
+          <div className='absolute inset-0 flex justify-center items-center z-40 pointer-events-none'>
+            <div className='bg-black/70 text-white px-6 py-3 rounded-lg'>
+              Click Anywhere To Enter Museum
+            </div>
+
+          </div>
+        )
+      }
+
+
 
       {
         mode === "explore" && (
@@ -125,6 +160,35 @@ const App = () => {
           </div>
         )
       }
+
+      {
+        mode === "explore" &&
+        nearbyMineral && (
+          <div
+            className="absolute top-[55%] left-1/2 text-white z-50"
+            style={{ transform: "translateX(-50%)" }}
+          >
+            Press E to inspect {nearbyMineral.name}
+          </div>
+        )
+      }
+
+      {
+        mode === "explore" && (
+          <button
+            className="absolute top-5 left-5 z-50 bg-white px-4 py-2 rounded"
+            onClick={() => {
+              document.exitFullscreen();
+
+              setMode("home");
+            }}
+          >
+            Exit Museum
+          </button>
+        )
+      }
+
+
     </div>
   )
 }
