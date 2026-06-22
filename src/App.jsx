@@ -10,6 +10,7 @@ import MuseumWalls from './components/MuseumWalls';
 import MuseumTitle from './components/MuseumTitle';
 import Player from './components/Player';
 import ControlsOverlay from './components/ControlsOverlay';
+import MuseumSpotlight from './components/MuseumSpotlight';
 
 const App = () => {
   const [selectedMineral, setSelectedMineral] = useState(null)
@@ -77,15 +78,15 @@ const App = () => {
     <div className='w-screen h-screen bg-black'>
 
       <Canvas camera={{ position: [0, 6, 16], fov: 50 }} shadows>
-        <ambientLight intensity={1} />
+        <ambientLight intensity={0.3} />
         <directionalLight
           castShadow
-          position={[5, 10, 5]} intensity={3}
+          position={[5, 10, 5]} intensity={1}
         />
-        <pointLight
+        {/* <pointLight
           position={[0, 8, 0]}
           intensity={30}
-        />
+        /> */}
 
         {minerals.map((mineral, index) => {
           return (
@@ -123,6 +124,16 @@ const App = () => {
           )
         }
 
+
+      {
+        positions.map((pos,index)=>(
+          <MuseumSpotlight 
+          key={index}
+          position={[pos[0],8,pos[2]]}
+          target={[pos[0],1,pos[2]]}
+          />
+        ))
+      }
 
 
 
@@ -207,6 +218,9 @@ const App = () => {
           </button>
         )
       }
+
+
+
 
 
     </div>
