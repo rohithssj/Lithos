@@ -1,7 +1,8 @@
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
+import { Vector3 } from "three";
 
-const Player = ({minerals,setnearbyMineral}) => {
+const Player = ({ minerals, setnearbyMineral }) => {
     const keys = useRef({});
 
     useEffect(() => {
@@ -23,22 +24,49 @@ const Player = ({minerals,setnearbyMineral}) => {
     }, []);
 
     useFrame((state, delta) => {
-        const speed = 5;
+        const speed = 5
+        const direction = new Vector3();
+
+        state.camera.getWorldDirection(direction);
+
+        direction.y = 0;
+        direction.normalize();
+
 
         if (keys.current["w"]) {
-            state.camera.position.z -= speed * delta;
+            state.camera.position.addScaledVector(
+                direction,
+                speed * delta
+            );
         }
 
         if (keys.current["s"]) {
-            state.camera.position.z += speed * delta;
+            state.camera.position.addScaledVector(
+                direction,
+                -speed * delta
+            );
         }
 
+        const right = new Vector3();
+
+        right.crossVectors(
+            direction,
+            state.camera.up
+        ).normalize();
+
+
         if (keys.current["a"]) {
-            state.camera.position.x -= speed * delta;
+            state.camera.position.addScaledVector(
+                right,
+                -speed * delta
+            );
         }
 
         if (keys.current["d"]) {
-            state.camera.position.x += speed * delta;
+            state.camera.position.addScaledVector(
+                right,
+                speed * delta
+            );
         }
 
         const cameraPos = state.camera.position;

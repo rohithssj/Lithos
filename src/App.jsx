@@ -43,11 +43,26 @@ const App = () => {
     }
   };
 
+  const handleExitMuseum = () => {
+
+    document.exitPointerLock?.();
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+
+    setSelectedMineral(null);
+    setNearbyMineral(null);
+
+    setMode("home");
+  };
+
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key.toLowerCase() === "e" && nearbyMineral) {
         setSelectedMineral(nearbyMineral)
         setMode("inspect")
+        document.exitPointerLock()
       }
     };
 
@@ -174,14 +189,10 @@ const App = () => {
       }
 
       {
-        mode === "explore" && (
+        mode === "explore" || mode === "inspect" && (
           <button
             className="absolute top-5 left-5 z-50 bg-white px-4 py-2 rounded"
-            onClick={() => {
-              document.exitFullscreen();
-
-              setMode("home");
-            }}
+            onClick={handleExitMuseum}
           >
             Exit Museum
           </button>
