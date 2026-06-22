@@ -9,6 +9,7 @@ import Pedestal from './components/Pedestal';
 import MuseumWalls from './components/MuseumWalls';
 import MuseumTitle from './components/MuseumTitle';
 import Player from './components/Player';
+import ControlsOverlay from './components/ControlsOverlay';
 
 const App = () => {
   const [selectedMineral, setSelectedMineral] = useState(null)
@@ -187,6 +188,14 @@ const App = () => {
           </div>
         )
       }
+
+
+      {
+        (mode === "explore") && (
+          <ControlsOverlay />
+        )
+      }
+
 
       {
         mode === "explore" || mode === "inspect" && (
