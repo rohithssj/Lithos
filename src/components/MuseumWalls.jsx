@@ -4,31 +4,31 @@ const MuseumWalls = () => {
     return (
         <>
             {/* Back Wall */}
-            <mesh position={[0, 6, -15]}>
+            <mesh position={[0, 7.5, -30]}>
                 <boxGeometry args={[60, 15, 1]} />
                 <meshStandardMaterial color="#d6d0c8" />
             </mesh>
 
             {/* Left Wall */}
-            <mesh position={[-30, 6, 0]}>
-                <boxGeometry args={[1, 15, 30]} />
+            <mesh position={[-30, 7.5, 0]}>
+                <boxGeometry args={[1, 15, 60]} />
                 <meshStandardMaterial color="#d6d0c8" />
             </mesh>
 
             {/* Right Wall */}
-            <mesh position={[30,6, 0]}>
-                <boxGeometry args={[1, 15, 30]} />
+            <mesh position={[30, 7.5, 0]}>
+                <boxGeometry args={[1, 15, 60]} />
                 <meshStandardMaterial color="#d6d0c8" />
             </mesh>
 
             {/* Front Left Wall */}
-            <mesh position={[-20, 6, 15]}>
+            <mesh position={[-20, 7.5, 30]}>
                 <boxGeometry args={[20, 15, 1]} />
                 <meshStandardMaterial color="#d6d0c8" />
             </mesh>
 
             {/* Front Right Wall */}
-            <mesh position={[20, 7.5, 15]}>
+            <mesh position={[20, 7.5, 30]}>
                 <boxGeometry args={[20, 15, 1]} />
                 <meshStandardMaterial color="#d6d0c8" />
             </mesh>

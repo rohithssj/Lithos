@@ -13,6 +13,11 @@ import ControlsOverlay from './components/ControlsOverlay';
 import MuseumSpotlight from './components/MuseumSpotlight';
 import MuseumCeiling from './components/MuseumCeiling';
 import Columns from './components/Columns';
+import WelcomeBoard from './components/WelcomeBoard';
+import EntranceArch from './components/EntranceArc';
+import LobbyFloor from './components/LobbyFloor';
+import GlassCase from './components/GlassCase';
+import TrackLights from './components/TrackLights';
 
 
 const App = () => {
@@ -22,26 +27,28 @@ const App = () => {
   const [nearbyMineral, setnearbyMineral] = useState(null)
 
   const positions = [
-    [-5, 0, -5],
-    [5, 0, -5],
-    [-5, 0, 5],
-    [5, 0, 5],
-    [0, 0, 0]
+    [-12, 0, -18],
+    [12, 0, -18],
+
+    [-12, 0, -6],
+    [12, 0, -6],
+
+    [0, 0, -12]
   ]
 
   const columns = [
-  [-20, 7.5, -10],
-  [-20, 7.5, 10],
+    [-20, 7.5, -10],
+    [-20, 7.5, 10],
 
-  [-10, 7.5, -10],
-  [-10, 7.5, 10],
+    [-10, 7.5, -10],
+    [-10, 7.5, 10],
 
-  [10, 7.5, -10],
-  [10, 7.5, 10],
+    [10, 7.5, -10],
+    [10, 7.5, 10],
 
-  [20, 7.5, -10],
-  [20, 7.5, 10]
-];
+    [20, 7.5, -10],
+    [20, 7.5, 10]
+  ];
   const mineralData = minerals.map((mineral, index) => ({
     ...mineral,
     position: positions[index]
@@ -94,11 +101,11 @@ const App = () => {
     <div className='w-screen h-screen bg-black'>
 
       <Canvas camera={{ position: [0, 6, 16], fov: 50 }} shadows>
-        <ambientLight intensity={0.3} />
-        <directionalLight
+        <ambientLight intensity={0.15} />
+        {/* <directionalLight
           castShadow
           position={[5, 10, 5]} intensity={1}
-        />
+        /> */}
         {/* <pointLight
           position={[0, 8, 0]}
           intensity={30}
@@ -125,6 +132,15 @@ const App = () => {
               />
             )
           })
+        }
+
+        {
+          positions.map((pos, index) => (
+            <GlassCase
+              key={index}
+              position={[pos[0], 2, pos[2]]}
+            />
+          ))
         }
 
         {
@@ -163,7 +179,25 @@ const App = () => {
 
         <Floor />
         <MuseumWalls />
+
         <MuseumCeiling />
+        <WelcomeBoard />
+
+        <spotLight
+          position={[0, 10, 20]}
+          intensity={30}
+          angle={0.4}
+          penumbra={1}
+          color={"#ffe6b8"}
+        />
+        <EntranceArch />
+        <LobbyFloor />
+        <pointLight
+          position={[0, 12, -10]}
+          intensity={8}
+          color="#fff4d6"
+        />
+        <TrackLights />
         <MuseumTitle />
       </Canvas>
       {
@@ -233,7 +267,7 @@ const App = () => {
 
 
       {
-        mode === "explore" || mode === "inspect" && (
+        (mode === "explore" || mode === "inspect") && (
           <button
             className="absolute top-5 left-5 z-50 bg-white px-4 py-2 rounded"
             onClick={handleExitMuseum}
