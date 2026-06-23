@@ -18,6 +18,8 @@ import EntranceArch from './components/EntranceArc';
 import LobbyFloor from './components/LobbyFloor';
 import GlassCase from './components/GlassCase';
 import TrackLights from './components/TrackLights';
+import MineralPlaque from './components/MineralPlaque';
+import EntranceBanner from './components/EntranceBanner';
 
 
 const App = () => {
@@ -25,16 +27,16 @@ const App = () => {
   const [mode, setMode] = useState("home")
   const [showPointerMessage, setShowPointerMessage] = useState(true)
   const [nearbyMineral, setnearbyMineral] = useState(null)
-
+  const [loadingMuseum, setLoadingMuseum] = useState(false);
   const positions = [
-    [-12, 0, -18],
-    [12, 0, -18],
+    [-12, 0, -20],
+    [12, 0, -20],
 
-    [-12, 0, -6],
-    [12, 0, -6],
+    [-12, 0, -8],
+    [12, 0, -8],
 
-    [0, 0, -12]
-  ]
+    [0, 0, -14]
+  ];
 
   const columns = [
     [-20, 7.5, -10],
@@ -55,21 +57,29 @@ const App = () => {
   }))
 
   const handleEnterMuseum = async () => {
-    try {
-      await document.documentElement.requestFullscreen();
-      setMode("explore");
-      setShowPointerMessage(true)
+    setLoadingMuseum(true);
 
-      setTimeout(() => {
-        setShowPointerMessage(false)
-      }, 3000)
-    } catch (error) {
-      console.log(error);
-    }
+    setTimeout(async () => {
+      try {
+        await document.documentElement.requestFullscreen();
+
+        setMode("explore");
+
+        setShowPointerMessage(true);
+
+        setTimeout(() => {
+          setShowPointerMessage(false);
+        }, 3000);
+
+      } catch (err) {
+        console.log(err);
+      }
+
+      setLoadingMuseum(false);
+    }, 1000);
   };
 
   const handleExitMuseum = () => {
-
     document.exitPointerLock?.();
 
     if (document.fullscreenElement) {
@@ -81,7 +91,6 @@ const App = () => {
 
     setMode("home");
   };
-
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key.toLowerCase() === "e" && nearbyMineral) {
@@ -100,7 +109,7 @@ const App = () => {
   return (
     <div className='w-screen h-screen bg-black'>
 
-      <Canvas camera={{ position: [0, 6, 16], fov: 50 }} shadows>
+      <Canvas camera={{ position: [0, 6, 18], fov: 50 }} shadows>
         <ambientLight intensity={0.15} />
         {/* <directionalLight
           castShadow
@@ -176,6 +185,20 @@ const App = () => {
         }
 
 
+        {
+          mode === "explore" &&
+          nearbyMineral &&
+          minerals.map((mineral, index) => (
+            <MineralPlaque
+              key={mineral.id}
+              mineral={mineral}
+              position={positions[index]}
+            />
+          ))
+        }
+
+
+
 
         <Floor />
         <MuseumWalls />
@@ -190,6 +213,7 @@ const App = () => {
           penumbra={1}
           color={"#ffe6b8"}
         />
+        <EntranceBanner />
         <EntranceArch />
         <LobbyFloor />
         <pointLight
@@ -234,6 +258,16 @@ const App = () => {
         )
       }
 
+      {
+        loadingMuseum && (
+          <div className="absolute inset-0 z-[100] bg-black flex items-center justify-center">
+            <h1 className="text-white text-4xl font-bold">
+              Entering Lithos...
+            </h1>
+          </div>
+        )
+      }
+
 
 
       {
@@ -269,10 +303,10 @@ const App = () => {
       {
         (mode === "explore" || mode === "inspect") && (
           <button
-            className="absolute top-5 left-5 z-50 bg-white px-4 py-2 rounded"
+            className="absolute top-5 left-5 z-50 bg-white/90 backdrop-blur px-4 py-2 rounded-lg hover:scale-105 transition"
             onClick={handleExitMuseum}
           >
-            Exit Museum
+            ← Return Home
           </button>
         )
       }

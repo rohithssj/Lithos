@@ -1,16 +1,25 @@
-import React from 'react'
-
-const Pedestal = ({position}) => {
+const Pedestal = ({ position }) => {
   return (
-    <mesh position={position}>
-        <boxGeometry args={[2,1,2]}/>
-        <meshStandardMaterial color={"#8f8476"}
-        roughness={0.5}
-        metalness={0.1}
-        />
-    </mesh>
-    
-  )
-}
+    <group position={position}>
 
-export default Pedestal
+      <mesh>
+        <boxGeometry args={[2, 1, 2]} />
+        <meshStandardMaterial
+          color="#8f8476"
+          roughness={0.5}
+        />
+      </mesh>
+
+      <mesh position={[0, 0.55, 0]}>
+        <cylinderGeometry args={[0.8, 0.8, 0.05, 32]} />
+        <meshStandardMaterial
+          emissive="#ffe6b8"
+          emissiveIntensity={1}
+        />
+      </mesh>
+
+    </group>
+  );
+};
+
+export default Pedestal;

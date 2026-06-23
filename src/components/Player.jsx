@@ -4,6 +4,7 @@ import { Vector3 } from "three";
 
 const Player = ({ minerals, setnearbyMineral }) => {
     const keys = useRef({});
+    const previousNearby = useRef(null)
 
     useEffect(() => {
         const down = (e) => {
@@ -23,8 +24,9 @@ const Player = ({ minerals, setnearbyMineral }) => {
         };
     }, []);
 
+    const speed = 5
+
     useFrame((state, delta) => {
-        const speed = 5
         const direction = new Vector3();
 
         state.camera.getWorldDirection(direction);
@@ -84,18 +86,28 @@ const Player = ({ minerals, setnearbyMineral }) => {
             const dx = cameraPos.x - mineral.position[0];
             const dz = cameraPos.z - mineral.position[2];
 
-            const distance = Math.sqrt(dx * dx + dz * dz);
+            const distanceSquared = dx * dx + dz * dz;
 
-            if (distance < closestDistance) {
+            if (distanceSquared < closestDistance) {
                 closestDistance = distance;
                 closest = mineral;
             }
         });
 
-        if (closestDistance < 7) {
-            setnearbyMineral(closest);
+        if (closestDistance < 49) {
+
+            if (previousNearby.current !== closest?.id) {
+                previousNearby.current = closest.id;
+                setnearbyMineral(closest);
+            }
+
         } else {
-            setnearbyMineral(null);
+
+            if (previousNearby.current !== null) {
+                previousNearby.current = null;
+                setnearbyMineral(null);
+            }
+
         }
 
         state.camera.position.x = Math.max(

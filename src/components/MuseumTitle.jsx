@@ -1,19 +1,28 @@
-import React from "react";
-import { Html } from "@react-three/drei";
+import { Text } from "@react-three/drei";
 
 const MuseumTitle = () => {
   return (
-    <Html position={[-2, 8, -14]}>
-      <h1
-        style={{
-          color: "white",
-          fontSize: "40px",
-          fontWeight: "bold",
-        }}
+    <>
+      <Text
+        position={[0, 10, -28]}
+        fontSize={2}
+        color="#ffffff"
+        anchorX="center"
+        anchorY="middle"
       >
         LITHOS
-      </h1>
-    </Html>
+      </Text>
+
+      <Text
+        position={[0, 8.5, -28]}
+        fontSize={0.8}
+        color="#d9d9d9"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Virtual Mineral Museum
+      </Text>
+    </>
   );
 };
 

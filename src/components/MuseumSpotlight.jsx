@@ -24,7 +24,7 @@ const MuseumSpotlight = ({ position, target }) => {
             intensity={8}
             angle={0.5}
             penumbra={1}
-            castShadow
+            castShadow = {false}
         />
     );
 };
