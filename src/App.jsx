@@ -11,6 +11,9 @@ import MuseumTitle from './components/MuseumTitle';
 import Player from './components/Player';
 import ControlsOverlay from './components/ControlsOverlay';
 import MuseumSpotlight from './components/MuseumSpotlight';
+import MuseumCeiling from './components/MuseumCeiling';
+import Columns from './components/Columns';
+
 
 const App = () => {
   const [selectedMineral, setSelectedMineral] = useState(null)
@@ -26,6 +29,19 @@ const App = () => {
     [0, 0, 0]
   ]
 
+  const columns = [
+  [-20, 7.5, -10],
+  [-20, 7.5, 10],
+
+  [-10, 7.5, -10],
+  [-10, 7.5, 10],
+
+  [10, 7.5, -10],
+  [10, 7.5, 10],
+
+  [20, 7.5, -10],
+  [20, 7.5, 10]
+];
   const mineralData = minerals.map((mineral, index) => ({
     ...mineral,
     position: positions[index]
@@ -125,21 +141,29 @@ const App = () => {
         }
 
 
-      {
-        positions.map((pos,index)=>(
-          <MuseumSpotlight 
-          key={index}
-          position={[pos[0],8,pos[2]]}
-          target={[pos[0],1,pos[2]]}
-          />
-        ))
-      }
+        {
+          positions.map((pos, index) => (
+            <MuseumSpotlight
+              key={index}
+              position={[pos[0], 8, pos[2]]}
+              target={[pos[0], 1, pos[2]]}
+            />
+          ))
+        }
 
+
+        {
+          columns.map((pos, index) => (
+            <Columns key={index}
+              position={pos} />
+          ))
+        }
 
 
 
         <Floor />
         <MuseumWalls />
+        <MuseumCeiling />
         <MuseumTitle />
       </Canvas>
       {

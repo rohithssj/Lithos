@@ -29,6 +29,16 @@ const Player = ({ minerals, setnearbyMineral }) => {
 
         state.camera.getWorldDirection(direction);
 
+        state.camera.position.x = Math.max(
+            -28,
+            Math.min(28, state.camera.position.x)
+        )
+
+        state.camera.position.z = Math.max(
+            -13,
+            Math.min(13, state.camera.position.z)
+        )
+
         direction.y = 0;
         direction.normalize();
 
@@ -71,6 +81,9 @@ const Player = ({ minerals, setnearbyMineral }) => {
 
         const cameraPos = state.camera.position;
 
+
+
+
         let closest = null;
         let closestDistance = Infinity;
 
@@ -87,7 +100,7 @@ const Player = ({ minerals, setnearbyMineral }) => {
             }
         });
 
-        if (closestDistance < 4) {
+        if (closestDistance < 7) {
             setnearbyMineral(closest);
         } else {
             setnearbyMineral(null);
