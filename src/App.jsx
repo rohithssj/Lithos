@@ -205,20 +205,32 @@ const App = () => {
 
 
         <Floor />
+
+        <pointLight
+          position={[-28, 10, -15]}
+          intensity={2}
+          color="#fff5e6"
+        />
+
+        <pointLight
+          position={[28, 10, -15]}
+          intensity={2}
+          color="#fff5e6"
+        />
         <MuseumWalls />
 
         <MuseumCeiling />
-        <WelcomeBoard />
 
         <pointLight
           position={[0, 12, -15]}
-          intensity={6}
-          color="#ffe8b3"
+          intensity={4}
+          color="#fff6dd"
         />
+
         <pointLight
           position={[0, 12, -35]}
-          intensity={5}
-          color="#fff0d0"
+          intensity={4}
+          color="#fff6dd"
         />
 
         <spotLight
@@ -228,6 +240,15 @@ const App = () => {
           penumbra={1}
           color={"#ffe8b3"}
         />
+
+        <WelcomeBoard />
+
+        <pointLight
+          position={[0, 10, 15]}
+          intensity={4}
+          color="#ffe7b0"
+        />
+
         <EntranceBanner />
         <EntranceArch />
         <LobbyFloor />

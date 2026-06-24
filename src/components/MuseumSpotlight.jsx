@@ -22,7 +22,7 @@ const MuseumSpotlight = ({ position, target }) => {
             ref={lightRef}
             position={position}
             intensity={8}
-            angle={0.5}
+            angle={0.25}
             penumbra={1}
             castShadow = {false}
         />

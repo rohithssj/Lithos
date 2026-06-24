@@ -16,6 +16,8 @@ const Floor = () => {
 
       <meshStandardMaterial
         map={floorTexture}
+        roughness={0.25}
+        metalness={0.1}
       />
     </mesh>
   );

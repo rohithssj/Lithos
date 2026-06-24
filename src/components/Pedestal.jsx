@@ -2,20 +2,21 @@ const Pedestal = ({ position }) => {
   return (
     <group position={position}>
 
-      <mesh>
-        <boxGeometry args={[2, 2.5, 2]} />
-        <meshStandardMaterial
-          color="#d4d0c8"
-          roughness={0.5}
-        />
+
+      <mesh position={[0, 0.3, 1.55]}>
+        <boxGeometry args={[1.5, 0.5, 0.05]} />
+        <meshStandardMaterial color="#222" />
+      </mesh>
+      {/* Base */}
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[3, 2, 3]} />
+        <meshStandardMaterial color="#d4d4d4" />
       </mesh>
 
-      <mesh position={[0, 0.55, 0]}>
-        <cylinderGeometry args={[0.8, 0.8, 0.05, 32]} />
-        <meshStandardMaterial
-          emissive="#ffe6b8"
-          emissiveIntensity={1}
-        />
+      {/* Top Slab */}
+      <mesh position={[0, 1.1, 0]}>
+        <boxGeometry args={[3.4, 0.2, 3.4]} />
+        <meshStandardMaterial color="#f0f0f0" />
       </mesh>
 
     </group>
