@@ -30,27 +30,23 @@ const App = () => {
   const [loadingMuseum, setLoadingMuseum] = useState(false);
 
   const positions = [
-    [-8, 0, -5],
-    [8, 0, -5],
+    [-12, 0, -8],
+    [12, 0, -8],
 
-    [-8, 0, -15],
-    [8, 0, -15],
+    [-12, 0, -24],
+    [12, 0, -24],
 
-    [0, 0, -25]
+    [0, 0, -40]
   ];
 
   const columns = [
-    [-20, 7.5, -10],
-    [-20, 7.5, 10],
+    [-25, 7, -30],
+    [-25, 7, -10],
+    [-25, 7, 10],
 
-    [-10, 7.5, -10],
-    [-10, 7.5, 10],
-
-    [10, 7.5, -10],
-    [10, 7.5, 10],
-
-    [20, 7.5, -10],
-    [20, 7.5, 10]
+    [25, 7, -30],
+    [25, 7, -10],
+    [25, 7, 10],
   ];
   const mineralData = minerals.map((mineral, index) => ({
     ...mineral,
@@ -112,7 +108,15 @@ const App = () => {
     <div className='w-screen h-screen bg-black'>
 
       <Canvas camera={{ position: [0, 6, 28], fov: 50 }}>
-        <ambientLight intensity={0.15} />
+        <ambientLight intensity={0.25} />
+
+
+        <color attach={"background"} args={["#c9c0b5"]} />
+        <fog
+          attach="fog"
+          args={["#c9c0b5", 40, 120]}
+        />
+
         {/* <directionalLight
           castShadow
           position={[5, 10, 5]} intensity={1}
@@ -207,9 +211,14 @@ const App = () => {
         <WelcomeBoard />
 
         <pointLight
-          position={[0, 12, -10]}
-          intensity={10}
-          color="#fff6e5"
+          position={[0, 12, -15]}
+          intensity={6}
+          color="#ffe8b3"
+        />
+        <pointLight
+          position={[0, 12, -35]}
+          intensity={5}
+          color="#fff0d0"
         />
 
         <spotLight
@@ -225,6 +234,7 @@ const App = () => {
         <TrackLights />
         <MuseumTitle />
       </Canvas>
+
       {
         selectedMineral && (
           <InfoPanel mineral={selectedMineral}
@@ -260,7 +270,7 @@ const App = () => {
 
       {
         loadingMuseum && (
-          <div className="text-center">
+          <div className="absolute inset-0 z-[100] bg-black flex flex-col items-center justify-center">
             <h1 className="text-white text-5xl font-bold mb-4">
               LITHOS
             </h1>

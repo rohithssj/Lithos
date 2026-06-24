@@ -116,7 +116,7 @@ const Player = ({ minerals, setnearbyMineral }) => {
         )
 
         state.camera.position.z = Math.max(
-            -28,
+            -50,
             Math.min(35, state.camera.position.z)
         )
 

@@ -1,16 +1,17 @@
-import { Center,Html, useGLTF } from "@react-three/drei";
+import { Center, Html, useGLTF } from "@react-three/drei";
 import { minerals } from "../data/minerals";
 
-const Mineral = ({ setSelectedMineral,mineral,position }) => {
-  const model = useGLTF("/models/mineral_aragonite.glb");
+const Mineral = ({ setSelectedMineral, mineral, position }) => {
+  const model = useGLTF(mineral.model)
 
 
   return (
     <group position={position}>
+      <Center>
       <primitive
         object={model.scene.clone()}
-        scale={0.6}
-        position={[3.6,0.6,-2.8]}
+        scale={mineral.scale}
+        position={[0, 0.8, 0]}
         // onClick={() => {
         //   setSelectedMineral(mineral)
         // }}
@@ -20,14 +21,17 @@ const Mineral = ({ setSelectedMineral,mineral,position }) => {
         onPointerLeave={() => {
           document.body.style.cursor = "default"
         }}
+        
       />
-      <Html position={[0,0,0]} center distanceFactor={8}>
+      
+      </Center>
+      {/* <Html position={[0, 0, 0]} center distanceFactor={8}>
         <div className="bg-white/90 px-3 py-1 rounded-lg text-black font-bold shadow-lg">
           {mineral.name}
         </div>
 
-      </Html>
-      </group>
+      </Html> */}
+    </group>
   );
 };
 
