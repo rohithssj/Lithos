@@ -144,6 +144,7 @@ const App = () => {
               <Pedestal
                 key={index}
                 position={[pos[0], -0.5, pos[2]]}
+                mineral={minerals[[index]]}
               />
             )
           })

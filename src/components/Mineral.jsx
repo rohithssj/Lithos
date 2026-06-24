@@ -25,12 +25,7 @@ const Mineral = ({ setSelectedMineral, mineral, position }) => {
       />
       
       </Center>
-      {/* <Html position={[0, 0, 0]} center distanceFactor={8}>
-        <div className="bg-white/90 px-3 py-1 rounded-lg text-black font-bold shadow-lg">
-          {mineral.name}
-        </div>
-
-      </Html> */}
+      
     </group>
   );
 };

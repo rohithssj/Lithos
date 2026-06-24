@@ -24,7 +24,7 @@ const Player = ({ minerals, setnearbyMineral }) => {
         };
     }, []);
 
-    const speed = 5
+    const speed = 8
 
     useFrame((state, delta) => {
         const direction = new Vector3();
