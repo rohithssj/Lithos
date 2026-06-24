@@ -89,7 +89,7 @@ const Player = ({ minerals, setnearbyMineral }) => {
             const distanceSquared = dx * dx + dz * dz;
 
             if (distanceSquared < closestDistance) {
-                closestDistance = distance;
+                closestDistance = distanceSquared;
                 closest = mineral;
             }
         });
@@ -97,7 +97,7 @@ const Player = ({ minerals, setnearbyMineral }) => {
         if (closestDistance < 49) {
 
             if (previousNearby.current !== closest?.id) {
-                previousNearby.current = closest.id;
+                previousNearby.current = closest?.id;
                 setnearbyMineral(closest);
             }
 

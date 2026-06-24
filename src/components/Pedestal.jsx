@@ -3,9 +3,9 @@ const Pedestal = ({ position }) => {
     <group position={position}>
 
       <mesh>
-        <boxGeometry args={[2, 1, 2]} />
+        <boxGeometry args={[2, 2.5, 2]} />
         <meshStandardMaterial
-          color="#8f8476"
+          color="#d4d0c8"
           roughness={0.5}
         />
       </mesh>

@@ -28,14 +28,15 @@ const App = () => {
   const [showPointerMessage, setShowPointerMessage] = useState(true)
   const [nearbyMineral, setnearbyMineral] = useState(null)
   const [loadingMuseum, setLoadingMuseum] = useState(false);
+
   const positions = [
-    [-12, 0, -20],
-    [12, 0, -20],
+    [-8, 0, -5],
+    [8, 0, -5],
 
-    [-12, 0, -8],
-    [12, 0, -8],
+    [-8, 0, -15],
+    [8, 0, -15],
 
-    [0, 0, -14]
+    [0, 0, -25]
   ];
 
   const columns = [
@@ -64,6 +65,7 @@ const App = () => {
         await document.documentElement.requestFullscreen();
 
         setMode("explore");
+        window.scrollTo(0, 0);
 
         setShowPointerMessage(true);
 
@@ -87,7 +89,7 @@ const App = () => {
     }
 
     setSelectedMineral(null);
-    setNearbyMineral(null);
+    setnearbyMineral(null);
 
     setMode("home");
   };
@@ -109,7 +111,7 @@ const App = () => {
   return (
     <div className='w-screen h-screen bg-black'>
 
-      <Canvas camera={{ position: [0, 6, 18], fov: 50 }} shadows>
+      <Canvas camera={{ position: [0, 6, 28], fov: 50 }}>
         <ambientLight intensity={0.15} />
         {/* <directionalLight
           castShadow
@@ -124,7 +126,7 @@ const App = () => {
           return (
             <Mineral
               key={mineral.id}
-              position={[positions[index][0], 2, positions[index][2]]}
+              position={[positions[index][0], 2.5, positions[index][2]]}
               mineral={mineral}
               setSelectedMineral={setSelectedMineral}
               castShadow
@@ -187,14 +189,12 @@ const App = () => {
 
         {
           mode === "explore" &&
-          nearbyMineral &&
-          minerals.map((mineral, index) => (
+          nearbyMineral && (
             <MineralPlaque
-              key={mineral.id}
-              mineral={mineral}
-              position={positions[index]}
+              mineral={nearbyMineral}
+              position={nearbyMineral.position}
             />
-          ))
+          )
         }
 
 
@@ -206,21 +206,22 @@ const App = () => {
         <MuseumCeiling />
         <WelcomeBoard />
 
+        <pointLight
+          position={[0, 12, -10]}
+          intensity={10}
+          color="#fff6e5"
+        />
+
         <spotLight
           position={[0, 10, 20]}
-          intensity={30}
+          intensity={25}
           angle={0.4}
           penumbra={1}
-          color={"#ffe6b8"}
+          color={"#ffe8b3"}
         />
         <EntranceBanner />
         <EntranceArch />
         <LobbyFloor />
-        <pointLight
-          position={[0, 12, -10]}
-          intensity={8}
-          color="#fff4d6"
-        />
         <TrackLights />
         <MuseumTitle />
       </Canvas>
@@ -235,14 +236,13 @@ const App = () => {
 
       {
         mode === "home" && (
-          <div className='absolute inset-0 flex justify-center items-center z-50'>
-            <button className='px-6 py-3 bg-white rounded-lg'
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-50">
+            <button
+              className="px-8 py-4 bg-white rounded-xl text-lg font-semibold hover:scale-105 transition"
               onClick={handleEnterMuseum}
             >
               Start Exploring
-
             </button>
-
           </div>
         )
       }
@@ -260,10 +260,14 @@ const App = () => {
 
       {
         loadingMuseum && (
-          <div className="absolute inset-0 z-[100] bg-black flex items-center justify-center">
-            <h1 className="text-white text-4xl font-bold">
-              Entering Lithos...
+          <div className="text-center">
+            <h1 className="text-white text-5xl font-bold mb-4">
+              LITHOS
             </h1>
+
+            <p className="text-gray-400">
+              Entering Museum...
+            </p>
           </div>
         )
       }
@@ -310,6 +314,9 @@ const App = () => {
           </button>
         )
       }
+
+
+
 
 
 

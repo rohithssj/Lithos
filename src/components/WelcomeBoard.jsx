@@ -1,37 +1,32 @@
-import { Html } from "@react-three/drei"
+import { Html } from "@react-three/drei";
 
 const WelcomeBoard = () => {
     return (
-        <>
-            {/* Sign Board */}
-            <mesh position={[0, 5, 22]}>
-                <boxGeometry args={[8, 5, 0.3]} />
-                <meshStandardMaterial color="#8a8175" />
+        <mesh position={[0, 5, 18]}>
+            <boxGeometry args={[14, 8, 1]} />
+            <meshStandardMaterial color="#6f6457" />
 
-                <Html center>
-                    <div className="bg-white p-6 rounded-xl text-center w-64">
-                        <h1 className="font-bold text-3xl mb-2">
-                            LITHOS
-                        </h1>
+            <Html
+                transform
+                position={[0, 0, 0.55]}
+                distanceFactor={8}
+            >
+                <div className="bg-white/95 backdrop-blur rounded-xl p-6 w-72 text-center shadow-xl">
+                    <h1 className="text-3xl font-bold">
+                        LITHOS
+                    </h1>
 
-                        <p className="text-lg mb-4">
-                            Virtual Mineral Museum
-                        </p>
+                    <p className="mt-2 text-lg">
+                        Virtual Mineral Museum
+                    </p>
 
-                        <p className="text-sm text-gray-600">
-                            Explore minerals from around the world
-                        </p>
-                    </div>
-                </Html>
-            </mesh>
+                    <p className="mt-4 text-sm text-gray-600">
+                        Explore minerals from around the world
+                    </p>
+                </div>
+            </Html>
+        </mesh>
+    );
+};
 
-            {/* Stand */}
-            <mesh position={[0, 1.5, 15]}>
-                <boxGeometry args={[0.5, 3, 0.5]} />
-                <meshStandardMaterial color="#555" />
-            </mesh>
-        </>
-    )
-}
-
-export default WelcomeBoard
+export default WelcomeBoard;
