@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from 'react'
+import React, {useState, useEffect } from 'react'
 import Mineral from './components/Mineral'
 import { Canvas } from '@react-three/fiber'
 import { PointerLockControls } from '@react-three/drei'
